@@ -1,0 +1,86 @@
+# ReViV conda environment
+#
+# Create the environment with:
+#     conda env create -f environment.yaml
+#     conda activate reviv
+#
+# Notes:
+#   * torch / torchvision are installed from the official PyTorch CUDA 12.4
+#     wheel index; torch-scatter comes as a prebuilt wheel from the PyG index
+#     matching that torch version (no compilation needed on x86-64).
+#   * On the CSCS Clariden container (pytorch-25.01, aarch64/GH200) torch,
+#     torchvision and decord are already provided by the base image — there,
+#     install only the remaining pip packages instead of using this file
+#     (see README.md, "Installation").
+name: reviv
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - ffmpeg  # needed by opencv / mediapy video IO
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu124
+      - --find-links https://data.pyg.org/whl/torch-2.6.0+cu124.html
+
+      # --- deep learning core ---
+      - torch==2.6.0
+      - torchvision==0.21.0
+      - decord
+
+      # --- modelling / tokenizers ---
+      # The HF stack is pinned: the vq/ code uses pre-0.21 diffusers APIs
+      # (diffusers.models.unet_2d_blocks, randn_tensor in diffusers.utils, ...)
+      # and diffusers 0.20 needs huggingface_hub < 0.26 (cached_download).
+      - timm
+      - transformers==4.46.3
+      - tokenizers==0.20.3
+      - diffusers==0.20.0
+      - safetensors
+      - huggingface_hub==0.25.2
+      # reviv/utils/clip needs packaging; setuptools>=81 removed pkg_resources
+      - setuptools<81
+      - packaging
+      - einops
+      - torchmetrics
+      - torch-scatter
+
+      # --- data / IO ---
+      - numpy
+      - scipy
+      - pandas
+      - scikit-learn
+      - webdataset
+      - braceexpand
+      - boto3
+      - pyyaml
+      - regex
+      - ftfy
+      - requests
+      - tqdm
+
+      # --- image / video ---
+      - opencv-python
+      - pillow
+      - albumentations
+      - matplotlib
+      - ffprobe-python
+      - mediapy
+
+      # --- 3D / human body & hands ---
+      - smplx
+      - trimesh
+      - pyrender
+      - yacs
+
+      # --- experiment tracking / logging ---
+      - wandb
+      - loguru
+
+      # --- visualization (demo_vis.py) ---
+      - viser
+      - kornia  # GeoCalib dependency
+      # GeoCalib is installed from a local source checkout. Clone it somewhere,
+      # then install in editable mode (adjust the path to your checkout):
+      #     git clone https://github.com/cvg/GeoCalib.git /path/to/GeoCalib
+      - -e /path/to/GeoCalib

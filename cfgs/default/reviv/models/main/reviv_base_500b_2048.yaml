@@ -1,0 +1,44 @@
+# Config for DDP
+
+# Arch: SwiGLU No Bias
+# Modalities: rgb, depth, cam, gaze, body, rgb512
+# Reference run: 256 GPUs, batch_size 4 per GPU -> global batch = 1024
+run_name: auto
+
+# Input & output
+num_input_tokens: 2048
+num_target_tokens: 2048
+loss_type: mod
+
+# Architecture
+model: reviv_base_12e_12d_swiglu_nobias
+dtype: bfloat16
+
+# Train
+epochs: -1
+total_tokens: 500 # in billions
+opt: adamw
+blr: 0.0001 # this is base_lr = 1e-4, lr = base_lr * batch_size / 256
+min_blr: 0.
+warmup_epochs: -1
+warmup_tokens: 10 # in billions
+batch_size: 4 # per GPU; 4 x 256 GPUs = 1024 global (lr scales with global batch / 256)
+num_workers: 4
+
+# Data
+data_config: "cfgs/default/reviv/data/ego/main/mix_mod9_all2all_2048.yaml"
+s3_data_endpoint: "/path/to/endpoint" # Change me
+eval_freq: 1
+fixed_eval: False
+epoch_size: 1_000_000 # Number of samples per "epoch"
+clip_grad: 1.
+
+# Saving
+save_ckpt_freq: 1
+output_dir: './output/auto'
+
+# Wandb
+log_wandb: True # Set to True to log to Weights & Biases
+wandb_project: 'reviv-train'
+wandb_entity: null # Change if needed
+wandb_run_name: auto

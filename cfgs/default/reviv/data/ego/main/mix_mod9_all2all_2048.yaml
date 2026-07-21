@@ -1,0 +1,336 @@
+train:
+  datasets:
+    holoassist:
+      type: multimodal
+
+      # Input and output domain names, separated by hyphen
+      in_domains: rgb@256-tok_rgb-tok_depth-tok_gaze-tok_cam-tok_lhand-tok_rhand
+      out_domains: tok_rgb-tok_depth-tok_gaze-tok_cam-tok_lhand-tok_rhand
+
+      # Dirichlet alphas concentration parameter for input and output.
+      # Can be either one value, or one value per input modality separated by hyphen.
+      input_alphas: null
+      target_alphas: null
+      # Path to specific alphas configuration to enable mixture of Dirichlets.
+      # If provided, overrides input_alphas and target_alphas
+      alphas_config: "cfgs/default/reviv/alphas_mixture/main/mix_mod6_all2all_uni_vit.yaml"
+
+      # Optionally, min_input_tokens, min_target_tokens, num_input_tokens, num_target_tokens can be specified here
+      # If so, they will override the values provided in the main config
+      min_input_tokens: null
+      min_target_tokens: null
+      num_input_tokens: 2048
+      num_target_tokens: 2048
+
+      # Data can either be local or on cloud storage (e.g. S3), see data docs for more info
+      # Use braceexpand notation to indicate shard range (e.g. shard-{0000..9999}.tar)
+      # Use brackets to indicate multiple modalities (e.g. [modality1,modality2,modality3])
+      data_path: './example_data/main_model_token/[rgb,rgb_video,depth,cam,gaze,lhand,rhand]/holoassist/token/shard-{000000..000195}.tar'
+      use_wds: True # Use webdataset
+      wds_n_repeats: 4 # Number of repeats for webdataset loader to improve efficiency
+      wds_shuffle_buffer_tar: 200 # Webdatasets shuffle buffer after loading tar files
+      wds_shuffle_buffer_repeat: 200 # Webdatasets shuffle buffer after repeating samples
+
+      main_augment_domain: rgb # Select from which modality to get the original full image size (mostly important for resizing bounding boxes)
+      aligned_captions: True # Align captions to crop_settings
+      tok_train_aug: False # Apply data augmentation to tokens (if multiple crop settings are available)
+
+    egogen:
+      type: multimodal
+
+      # Input and output domain names, separated by hyphen
+      in_domains: rgb@256-tok_rgb-tok_depth-tok_cam
+      out_domains: tok_rgb-tok_depth-tok_cam
+
+      # Dirichlet alphas concentration parameter for input and output.
+      # Can be either one value, or one value per input modality separated by hyphen.
+      input_alphas: null
+      target_alphas: null
+      # Path to specific alphas configuration to enable mixture of Dirichlets.
+      # If provided, overrides input_alphas and target_alphas
+      alphas_config: "cfgs/default/reviv/alphas_mixture/main/mix_mod6_all2all_uni_vit.yaml"
+
+      # Optionally, min_input_tokens, min_target_tokens, num_input_tokens, num_target_tokens can be specified here
+      # If so, they will override the values provided in the main config
+      min_input_tokens: null
+      min_target_tokens: null
+      num_input_tokens: 2048
+      num_target_tokens: 2048
+
+      # Data can either be local or on cloud storage (e.g. S3), see data docs for more info
+      # Use braceexpand notation to indicate shard range (e.g. shard-{0000..9999}.tar)
+      # Use brackets to indicate multiple modalities (e.g. [modality1,modality2,modality3])
+      data_path: './example_data/main_model_token/[rgb,rgb_video,depth,cam]/egogen/token/shard-{000000..000040}.tar'
+      use_wds: True # Use webdataset
+      wds_n_repeats: 4 # Number of repeats for webdataset loader to improve efficiency
+      wds_shuffle_buffer_tar: 200 # Webdatasets shuffle buffer after loading tar files
+      wds_shuffle_buffer_repeat: 200 # Webdatasets shuffle buffer after repeating samples
+
+      main_augment_domain: rgb # Select from which modality to get the original full image size (mostly important for resizing bounding boxes)
+      aligned_captions: True # Align captions to crop_settings
+      tok_train_aug: False # Apply data augmentation to tokens (if multiple crop settings are available)
+
+    egoexo:
+      type: multimodal
+
+      # Input and output domain names, separated by hyphen
+      in_domains: rgb@256-tok_rgb-tok_gaze-tok_cam
+      out_domains: tok_rgb-tok_gaze-tok_cam
+
+      # Dirichlet alphas concentration parameter for input and output.
+      # Can be either one value, or one value per input modality separated by hyphen.
+      input_alphas: null
+      target_alphas: null
+      # Path to specific alphas configuration to enable mixture of Dirichlets.
+      # If provided, overrides input_alphas and target_alphas
+      alphas_config: "cfgs/default/reviv/alphas_mixture/main/mix_mod6_all2all_uni_vit.yaml"
+
+      # Optionally, min_input_tokens, min_target_tokens, num_input_tokens, num_target_tokens can be specified here
+      # If so, they will override the values provided in the main config
+      min_input_tokens: null
+      min_target_tokens: null
+      num_input_tokens: 2048
+      num_target_tokens: 2048
+
+      # Data can either be local or on cloud storage (e.g. S3), see data docs for more info
+      # Use braceexpand notation to indicate shard range (e.g. shard-{0000..9999}.tar)
+      # Use brackets to indicate multiple modalities (e.g. [modality1,modality2,modality3])
+      data_path: './example_data/main_model_token/[rgb,rgb_video,cam,gaze]/egoexo/token/shard-{000000..000251}.tar'
+      use_wds: True # Use webdataset
+      wds_n_repeats: 4 # Number of repeats for webdataset loader to improve efficiency
+      wds_shuffle_buffer_tar: 200 # Webdatasets shuffle buffer after loading tar files
+      wds_shuffle_buffer_repeat: 200 # Webdatasets shuffle buffer after repeating samples
+
+      main_augment_domain: rgb # Select from which modality to get the original full image size (mostly important for resizing bounding boxes)
+      aligned_captions: True # Align captions to crop_settings
+      tok_train_aug: False # Apply data augmentation to tokens (if multiple crop settings are available)
+
+    h2o:
+      type: multimodal
+
+      # Input and output domain names, separated by hyphen
+      in_domains: rgb@256-tok_rgb-tok_depth-tok_cam-tok_lhand-tok_rhand
+      out_domains: tok_rgb-tok_depth-tok_cam-tok_lhand-tok_rhand
+
+      # Dirichlet alphas concentration parameter for input and output.
+      # Can be either one value, or one value per input modality separated by hyphen.
+      input_alphas: null
+      target_alphas: null
+      # Path to specific alphas configuration to enable mixture of Dirichlets.
+      # If provided, overrides input_alphas and target_alphas
+      alphas_config: "cfgs/default/reviv/alphas_mixture/main/mix_mod6_all2all_uni_vit.yaml"
+
+      # Optionally, min_input_tokens, min_target_tokens, num_input_tokens, num_target_tokens can be specified here
+      # If so, they will override the values provided in the main config
+      min_input_tokens: null
+      min_target_tokens: null
+      num_input_tokens: 2048
+      num_target_tokens: 2048
+
+      # Data can either be local or on cloud storage (e.g. S3), see data docs for more info
+      # Use braceexpand notation to indicate shard range (e.g. shard-{0000..9999}.tar)
+      # Use brackets to indicate multiple modalities (e.g. [modality1,modality2,modality3])
+      data_path: './example_data/main_model_token/[rgb,rgb_video,depth,cam,lhand,rhand]/h2o/token/shard-{000000..000001}.tar'
+      use_wds: True # Use webdataset
+      wds_n_repeats: 4 # Number of repeats for webdataset loader to improve efficiency
+      wds_shuffle_buffer_tar: 200 # Webdatasets shuffle buffer after loading tar files
+      wds_shuffle_buffer_repeat: 200 # Webdatasets shuffle buffer after repeating samples
+
+      main_augment_domain: rgb # Select from which modality to get the original full image size (mostly important for resizing bounding boxes)
+      aligned_captions: True # Align captions to crop_settings
+      tok_train_aug: False # Apply data augmentation to tokens (if multiple crop settings are available)
+
+    taco:
+      type: multimodal
+
+      # Input and output domain names, separated by hyphen
+      in_domains: rgb@256-tok_rgb-tok_depth-tok_cam-tok_lhand-tok_rhand
+      out_domains: tok_rgb-tok_depth-tok_cam-tok_lhand-tok_rhand
+
+      # Dirichlet alphas concentration parameter for input and output.
+      # Can be either one value, or one value per input modality separated by hyphen.
+      input_alphas: null
+      target_alphas: null
+      # Path to specific alphas configuration to enable mixture of Dirichlets.
+      # If provided, overrides input_alphas and target_alphas
+      alphas_config: "cfgs/default/reviv/alphas_mixture/main/mix_mod6_all2all_uni_vit.yaml"
+
+      # Optionally, min_input_tokens, min_target_tokens, num_input_tokens, num_target_tokens can be specified here
+      # If so, they will override the values provided in the main config
+      min_input_tokens: null
+      min_target_tokens: null
+      num_input_tokens: 2048
+      num_target_tokens: 2048
+
+      # Data can either be local or on cloud storage (e.g. S3), see data docs for more info
+      # Use braceexpand notation to indicate shard range (e.g. shard-{0000..9999}.tar)
+      # Use brackets to indicate multiple modalities (e.g. [modality1,modality2,modality3])
+      data_path: './example_data/main_model_token/[rgb,rgb_video,depth,cam,lhand,rhand]/taco/token/shard-{000000..000003}.tar'
+      use_wds: True # Use webdataset
+      wds_n_repeats: 4 # Number of repeats for webdataset loader to improve efficiency
+      wds_shuffle_buffer_tar: 200 # Webdatasets shuffle buffer after loading tar files
+      wds_shuffle_buffer_repeat: 200 # Webdatasets shuffle buffer after repeating samples
+
+      main_augment_domain: rgb # Select from which modality to get the original full image size (mostly important for resizing bounding boxes)
+      aligned_captions: True # Align captions to crop_settings
+      tok_train_aug: False # Apply data augmentation to tokens (if multiple crop settings are available)
+
+    arctic:
+      type: multimodal
+
+      # Input and output domain names, separated by hyphen
+      in_domains: rgb@256-tok_rgb-tok_depth-tok_cam-tok_lhand-tok_rhand
+      out_domains: tok_rgb-tok_depth-tok_cam-tok_lhand-tok_rhand
+
+      # Dirichlet alphas concentration parameter for input and output.
+      # Can be either one value, or one value per input modality separated by hyphen.
+      input_alphas: null
+      target_alphas: null
+      # Path to specific alphas configuration to enable mixture of Dirichlets.
+      # If provided, overrides input_alphas and target_alphas
+      alphas_config: "cfgs/default/reviv/alphas_mixture/main/mix_mod6_all2all_uni_vit.yaml"
+
+      # Optionally, min_input_tokens, min_target_tokens, num_input_tokens, num_target_tokens can be specified here
+      # If so, they will override the values provided in the main config
+      min_input_tokens: null
+      min_target_tokens: null
+      num_input_tokens: 2048
+      num_target_tokens: 2048
+
+      # Data can either be local or on cloud storage (e.g. S3), see data docs for more info
+      # Use braceexpand notation to indicate shard range (e.g. shard-{0000..9999}.tar)
+      # Use brackets to indicate multiple modalities (e.g. [modality1,modality2,modality3])
+      data_path: './example_data/main_model_token/[rgb,rgb_video,depth,cam,lhand,rhand]/arctic/token/shard-{000000..000002}.tar'
+      use_wds: True # Use webdataset
+      wds_n_repeats: 4 # Number of repeats for webdataset loader to improve efficiency
+      wds_shuffle_buffer_tar: 200 # Webdatasets shuffle buffer after loading tar files
+      wds_shuffle_buffer_repeat: 200 # Webdatasets shuffle buffer after repeating samples
+
+      main_augment_domain: rgb # Select from which modality to get the original full image size (mostly important for resizing bounding boxes)
+      aligned_captions: True # Align captions to crop_settings
+      tok_train_aug: False # Apply data augmentation to tokens (if multiple crop settings are available)
+
+    hot3d_quest:
+      type: multimodal
+
+      # Input and output domain names, separated by hyphen
+      # remove quest rgb prediction
+      in_domains: rgb@256-tok_rgb-tok_depth-tok_cam-tok_lhand-tok_rhand
+      out_domains: tok_depth-tok_cam-tok_lhand-tok_rhand
+
+      # Dirichlet alphas concentration parameter for input and output.
+      # Can be either one value, or one value per input modality separated by hyphen.
+      input_alphas: null
+      target_alphas: null
+      # Path to specific alphas configuration to enable mixture of Dirichlets.
+      # If provided, overrides input_alphas and target_alphas
+      alphas_config: "cfgs/default/reviv/alphas_mixture/main/mix_mod6_all2all_uni_vit.yaml"
+
+      # Optionally, min_input_tokens, min_target_tokens, num_input_tokens, num_target_tokens can be specified here
+      # If so, they will override the values provided in the main config
+      min_input_tokens: null
+      min_target_tokens: null
+      num_input_tokens: 2048
+      num_target_tokens: 2048
+
+      # Data can either be local or on cloud storage (e.g. S3), see data docs for more info
+      # Use braceexpand notation to indicate shard range (e.g. shard-{0000..9999}.tar)
+      # Use brackets to indicate multiple modalities (e.g. [modality1,modality2,modality3])
+      data_path: './example_data/main_model_token/[rgb,rgb_video,depth,cam,lhand,rhand]/hot3d_quest/token/shard-{000000..000009}.tar'
+      use_wds: True # Use webdataset
+      wds_n_repeats: 4 # Number of repeats for webdataset loader to improve efficiency
+      wds_shuffle_buffer_tar: 200 # Webdatasets shuffle buffer after loading tar files
+      wds_shuffle_buffer_repeat: 200 # Webdatasets shuffle buffer after repeating samples
+
+      main_augment_domain: rgb # Select from which modality to get the original full image size (mostly important for resizing bounding boxes)
+      aligned_captions: True # Align captions to crop_settings
+      tok_train_aug: False # Apply data augmentation to tokens (if multiple crop settings are available)
+
+    hot3d_aria:
+      type: multimodal
+
+      # Input and output domain names, separated by hyphen
+      in_domains: rgb@256-tok_rgb-tok_depth-tok_cam-tok_gaze-tok_lhand-tok_rhand
+      out_domains: tok_rgb-tok_depth-tok_cam-tok_gaze-tok_lhand-tok_rhand
+
+      # Dirichlet alphas concentration parameter for input and output.
+      # Can be either one value, or one value per input modality separated by hyphen.
+      input_alphas: null
+      target_alphas: null
+      # Path to specific alphas configuration to enable mixture of Dirichlets.
+      # If provided, overrides input_alphas and target_alphas
+      alphas_config: "cfgs/default/reviv/alphas_mixture/main/mix_mod6_all2all_uni_vit.yaml"
+
+      # Optionally, min_input_tokens, min_target_tokens, num_input_tokens, num_target_tokens can be specified here
+      # If so, they will override the values provided in the main config
+      min_input_tokens: null
+      min_target_tokens: null
+      num_input_tokens: 2048
+      num_target_tokens: 2048
+
+      # Data can either be local or on cloud storage (e.g. S3), see data docs for more info
+      # Use braceexpand notation to indicate shard range (e.g. shard-{0000..9999}.tar)
+      # Use brackets to indicate multiple modalities (e.g. [modality1,modality2,modality3])
+      data_path: './example_data/main_model_token/[rgb,rgb_video,depth,cam,gaze,lhand,rhand]/hot3d_aria/token/shard-{000000..000006}.tar'
+      use_wds: True # Use webdataset
+      wds_n_repeats: 4 # Number of repeats for webdataset loader to improve efficiency
+      wds_shuffle_buffer_tar: 200 # Webdatasets shuffle buffer after loading tar files
+      wds_shuffle_buffer_repeat: 200 # Webdatasets shuffle buffer after repeating samples
+
+      main_augment_domain: rgb # Select from which modality to get the original full image size (mostly important for resizing bounding boxes)
+      aligned_captions: True # Align captions to crop_settings
+      tok_train_aug: False # Apply data augmentation to tokens (if multiple crop settings are available)
+
+    nymeria_512:
+      type: multimodal
+
+      # Input and output domain names, separated by hyphen
+      in_domains: rgb512-tok_rgb_512-tok_depth_512-tok_cam-tok_gaze-tok_body-tok_caption
+      out_domains: tok_rgb_512-tok_depth_512-tok_cam-tok_gaze-tok_body-tok_caption
+
+      # Dirichlet alphas concentration parameter for input and output.
+      # Can be either one value, or one value per input modality separated by hyphen.
+      input_alphas: null
+      target_alphas: null
+      # Path to specific alphas configuration to enable mixture of Dirichlets.
+      # If provided, overrides input_alphas and target_alphas
+      alphas_config: "cfgs/default/reviv/alphas_mixture/main/mix_mod9_all2all_uni_vit_body_rgb512_txt.yaml"
+
+      # Optionally, min_input_tokens, min_target_tokens, num_input_tokens, num_target_tokens can be specified here
+      # If so, they will override the values provided in the main config
+      min_input_tokens: null
+      min_target_tokens: null
+      num_input_tokens: 2048
+      num_target_tokens: 2048
+
+      # Data can either be local or on cloud storage (e.g. S3), see data docs for more info
+      # Use braceexpand notation to indicate shard range (e.g. shard-{0000..9999}.tar)
+      # Use brackets to indicate multiple modalities (e.g. [modality1,modality2,modality3])
+      data_path: './example_data/main_model_token/[rgb_video_512,rgb_512,depth_512,cam,gaze,body,text]/nymeria_512/token/shard-{000000..000406}.tar'
+      use_wds: True # Use webdataset
+      wds_n_repeats: 4 # Number of repeats for webdataset loader to improve efficiency
+      wds_shuffle_buffer_tar: 200 # Webdatasets shuffle buffer after loading tar files
+      wds_shuffle_buffer_repeat: 200 # Webdatasets shuffle buffer after repeating samples
+
+      main_augment_domain: rgb # Select from which modality to get the original full image size (mostly important for resizing bounding boxes)
+      aligned_captions: True # Align captions to crop_settings
+      tok_train_aug: False # Apply data augmentation to tokens (if multiple crop settings are available)
+
+  weights: [0.21311092380457425, 0.044755586805661704, 0.27454504164173693, 0.001720696838547103, 0.004345414604960324, 0.0032645200172943135, 0.008723583591365072, 0.0058630342785519944, 0.4436711984173083]
+
+val:
+  datasets:
+    holoassist:
+      data_path: './example_data/main_model_token/val_correct'
+    egoexo:
+      data_path: './example_data/main_model_token/val_correct'
+    h2o:
+      data_path: './example_data/main_model_token/val_correct'
+    taco:
+      data_path: './example_data/main_model_token/val_correct'
+    arctic:
+      data_path: './example_data/main_model_token/val_correct'
+    hot3d_aria:
+      data_path: './example_data/main_model_token/val_correct'
+    nymeria_512:
+      data_path: './example_data/main_model_token/val_correct'

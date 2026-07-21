@@ -1,0 +1,80 @@
+run_name: auto
+
+# Released body tokenizer (matches reviv_tok_body.pth in the released checkpoint
+# sets). 21-joint egocentric body layout (domain: body), codebook 2048.
+# With num_frames 60 and tubelet_size [2, 3] this produces
+# (60 / 2) x (21 / 3) = 30 x 7 = 210 tokens, matching modality_info's
+# tok_body max_tokens. The 60-joint fullbody_motion_* configs are a separate
+# experimental layout and are NOT what the released checkpoints use.
+
+# Architecture
+encoder_type: BodyTransformer
+decoder_type: BodyTransformer
+num_frames: 60
+post_mlp: True
+body_joint_nums: 21
+tubelet_size: [2, 3]
+
+# Quantizer
+codebook_size: 2048
+latent_dim: 32
+norm_codes: True
+quantizer_type: lucid
+coef_ema_dead_code: 32.0
+code_replacement_policy: batch_random
+commitment_weight: 1.0
+quantizer_ema_decay: 0.99
+kmeans_init: False
+
+# Losses
+# The `body` domain returns [T, 21, 3] with no validity-mask channel, so use a
+# plain (unmasked) MSE loss. (fullbody uses mse_mask_fullbody for its masked 4th
+# channel.)
+loss_fn: mse
+dtype_percept: fp32
+codebook_weight: 1.0
+
+# Train
+dtype: fp32
+epochs: 1000
+opt: adamw
+opt_betas: [0.9, 0.99]
+blr: 0.0001
+warmup_lr: 0.000001
+min_lr: 0.
+warmup_epochs: 5
+batch_size: 64
+clip_grad: 1.0
+model_ema: False
+model_ema_decay: 0.9999
+model_ema_update_freq: 1
+find_unused_params: False
+save_ckpt_freq: 1
+init_weights: False
+
+# Eval
+step_eval: False
+epoch_eval: True
+eval_freq: 1
+eval_metrics_freq: 0
+eval_image_log_freq: 0
+num_eval_metrics_samples: 50000
+num_logged_images: 100
+input_size_eval: 224
+
+# Data
+domain: body
+imagenet_default_mean_and_std: False
+min_crop_scale: 0.8
+# BodyDataset routes to the 21-joint egocentric layout
+# (${REVIV_DATA_ROOT}/body/train_21_ego_251031.npy + mean/std sidecars).
+# Change me to point at your processed 21-joint body clips.
+data_path: "./example_data/body/train_21_ego_251031.npy"
+eval_data_path: null
+
+# Wandb
+log_wandb: True
+wandb_project: 'reviv-body-tokenizers'
+wandb_entity: null
+wandb_run_name: auto
+output_dir: './output/auto'

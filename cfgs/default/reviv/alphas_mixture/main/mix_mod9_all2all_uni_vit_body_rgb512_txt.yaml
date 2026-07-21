@@ -1,0 +1,44 @@
+# all2all with input and target alphas 0.01, 0.1, 1.0, 10.0
+# rgb2all with target alpha 0.5
+# Extends mix_mod8_all2all_uni_vit_body_rgb512 with tok_caption
+
+sampling_weights: [1.0, 1.0, 1.0, 1.0]
+
+alphas_mixture:
+  rgb@256:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0., 0., 0., 0.]
+  rgb512:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0., 0., 0., 0.]
+  tok_rgb:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+  tok_rgb_512:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+  tok_depth:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+  tok_depth_512:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+  tok_gaze:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+  tok_cam:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+  tok_lhand:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+  tok_rhand:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+  tok_body:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+  tok_caption:
+    input_alphas: [0.01, 0.1, 1., 10.]
+    target_alphas: [0.01, 0.1, 1., 10.]
+    keep: ['random', 'random', 'random', 'random']
