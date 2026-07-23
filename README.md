@@ -10,7 +10,7 @@
 
 ETH Zürich · Delft University of Technology · Microsoft
 
-[`Website`](https://reviv4d.github.io/) | [`Paper`](https://drive.google.com/file/d/1LoO1qw-8T-kQk5BB1urJ8RQGyPIppPdI/view) | [`BibTeX`](#citation)
+[`Website`](https://reviv4d.github.io/) | [`Paper`](https://arxiv.org/pdf/2607.17790v1) | [`BibTeX`](#citation)
 
 </div>
 
@@ -137,7 +137,17 @@ Detokenizers and norm stats must come from the same set as the main checkpoint t
 
 ## License
 
-This code builds on [4M](https://github.com/apple/ml-4m), [EgoM2P](https://github.com/ligengen/EgoM2P) and the [NVIDIA Cosmos](https://github.com/NVIDIA/Cosmos) tokenizer, along with the projects listed in [ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md). The code is released under the Apache 2.0 license (see [LICENSE](LICENSE)).
+The code in this repository is released under the Apache 2.0 license (see [LICENSE](LICENSE)). It builds on [4M](https://github.com/apple/ml-4m), [EgoM2P](https://github.com/ligengen/EgoM2P) and the [NVIDIA Cosmos](https://github.com/NVIDIA/Cosmos) tokenizer, along with the projects listed in [ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md).
+
+The model weights are released under the Sample Code License (see [LICENSE_WEIGHTS](LICENSE_WEIGHTS)), which permits non-commercial use only.
+
+### Training data
+
+The released model weights were derived from the following datasets: [Ego-Exo4D](https://ego-exo4d-data.org/), [HoloAssist](https://holoassist.github.io/), [HOT3D](https://facebookresearch.github.io/hot3d/) (Aria and Quest), [ARCTIC](https://arctic.is.tue.mpg.de/), [TACO](https://taco2024.github.io/), [H2O](https://taeinkwon.com/projects/h2o/), [EgoGen](https://ego-gen.github.io/) and [Nymeria](https://www.projectaria.com/datasets/nymeria/). Depth supervision consists of pseudo-labels generated with [Video Depth Anything](https://github.com/DepthAnything/Video-Depth-Anything). No dataset or derived annotation is redistributed in this repository.
+
+Each dataset and model listed above is subject to its own license and terms of use, which are retained by their respective owners and apply independently of, and in addition to, the licenses granted here. Users are responsible for obtaining each dataset from its official source and for ensuring that their use complies with the applicable terms.
+
+Use of the released model weights is limited to non-commercial research purposes.
 
 ## Citation
 
